@@ -1,0 +1,3094 @@
+{
+  "info": {
+    "_postman_id": "b0ec7ee5-9f8c-4987-b4f1-e871a69f32ab",
+    "name": "TEST - 4.4.1 Copy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53864927",
+    "_collection_link": "https://go.postman.co/collection/53864927-b0ec7ee5-9f8c-4987-b4f1-e871a69f32ab?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POS — Позитивные сценарии",
+      "item": [
+        {
+          "name": "TC-POS-01: Минимальные значения (amount=10000, term=6)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 10000,\n  \"term\": 6,\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos01@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-02: Максимальные значения (amount=1000000, term=360)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  "",
+                  "pm.test('requestedAmount = 1000000 во всех предложениях', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.requestedAmount, 'offer #' + (i+1)).to.equal(1000000);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('term = 360 во всех предложениях', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.term, 'offer #' + (i+1)).to.equal(360);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1000000,\n  \"term\": 360,\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos02@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-03: Граничные значения ФИО (min=2)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Iv\",\n  \"lastName\": \"Iv\",\n  \"middleName\": \"Iv\",\n  \"email\": \"pos03@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-04: Граничные значения ФИО (max=30 символов)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"lastName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"middleName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"email\": \"pos04@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-05: Email максимальной длины (50 символов до @, 20 символов домен)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx@abcdefghijklmnop.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-06: Email минимальной длины (2 символа до @, 2 после)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"ab@.r\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-07: Возраст ровно 18 лет (граничное значение)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "",
+                  "const today = new Date();",
+                  "const birthYear = today.getFullYear() - 18;",
+                  "const month = String(today.getMonth() + 1).padStart(2, '0');",
+                  "const day = String(today.getDate()).padStart(2, '0');",
+                  "const birthdate = birthYear + '-' + month + '-' + day;",
+                  "pm.environment.set('birthdate_18', birthdate);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos07@test.com\",\n  \"birthdate\": \"{{birthdate_18}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-08: Возраст 60 лет",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const today = new Date();",
+                  "const birthYear = today.getFullYear() - 60;",
+                  "const month = String(today.getMonth() + 1).padStart(2, '0');",
+                  "const day = String(today.getDate()).padStart(2, '0');",
+                  "const birthdate = birthYear + '-' + month + '-' + day;",
+                  "pm.environment.set('birthdate_60', birthdate);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos08@test.com\",\n  \"birthdate\": \"{{birthdate_60}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-09: Граничные значения паспорта (серия 0000, номер 000000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos09@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"0000\",\n  \"passportNumber\": \"000000\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-10: Граничные значения паспорта (серия 9999, номер 999999)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos10@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"9999\",\n  \"passportNumber\": \"999999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-11: Проверка корректности ставок в 4 кредитных предложениях",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  "",
+                  "pm.test('applicationId одинаковый во всех 4 предложениях', function () {",
+                  "    const body = pm.response.json();",
+                  "    const firstId = body[0].applicationId;",
+                  "    body.forEach(function(offer, i) {",
+                  "        pm.expect(offer.applicationId, 'offer #' + (i+1)).to.equal(firstId);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('Порядок предложений от худшего к лучшему', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body[0].isInsuranceEnabled).to.equal(false);",
+                  "    pm.expect(body[0].isSalaryClient).to.equal(false);",
+                  "    pm.expect(body[1].isInsuranceEnabled).to.equal(false);",
+                  "    pm.expect(body[1].isSalaryClient).to.equal(true);",
+                  "    pm.expect(body[2].isInsuranceEnabled).to.equal(true);",
+                  "    pm.expect(body[2].isSalaryClient).to.equal(false);",
+                  "    pm.expect(body[3].isInsuranceEnabled).to.equal(true);",
+                  "    pm.expect(body[3].isSalaryClient).to.equal(true);",
+                  "});",
+                  "",
+                  "pm.test('Ставки rate в каждом предложении', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body[0].rate).to.equal(15.0);",
+                  "    pm.expect(body[1].rate).to.equal(14.0);",
+                  "    pm.expect(body[2].rate).to.equal(11.0);",
+                  "    pm.expect(body[3].rate).to.equal(10.0);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos11@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-12: Страховка при сумме кредита < 200 000 (amount=150000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('totalAmount с страховкой = requestedAmount + 10000 = 160000', function () {",
+                  "    const body = pm.response.json();",
+                  "    const withInsurance = body.filter(o => o.isInsuranceEnabled === true);",
+                  "    pm.expect(withInsurance.length).to.be.greaterThan(0);",
+                  "    withInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer with insurance #' + (i+1)).to.equal(160000);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('totalAmount без страховки = requestedAmount = 150000', function () {",
+                  "    const body = pm.response.json();",
+                  "    const noInsurance = body.filter(o => o.isInsuranceEnabled === false);",
+                  "    pm.expect(noInsurance.length).to.be.greaterThan(0);",
+                  "    noInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer no insurance #' + (i+1)).to.equal(150000);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 150000,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos12@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-13: Страховка при сумме кредита > 200 000 (amount=300000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('totalAmount с страховкой = 300000 + 25000 = 325000', function () {",
+                  "    const body = pm.response.json();",
+                  "    const withInsurance = body.filter(o => o.isInsuranceEnabled === true);",
+                  "    pm.expect(withInsurance.length).to.be.greaterThan(0);",
+                  "    withInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer with insurance #' + (i+1)).to.equal(325000);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('totalAmount без страховки = requestedAmount = 300000', function () {",
+                  "    const body = pm.response.json();",
+                  "    const noInsurance = body.filter(o => o.isInsuranceEnabled === false);",
+                  "    pm.expect(noInsurance.length).to.be.greaterThan(0);",
+                  "    noInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer no insurance #' + (i+1)).to.equal(300000);",
+                  "    });",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 300000,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos13@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-14: Страховка при сумме кредита = 200 000 (граничное значение)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('totalAmount с страховкой = 200000 + 10000 = 210000 (граничное)', function () {",
+                  "    const body = pm.response.json();",
+                  "    const withInsurance = body.filter(o => o.isInsuranceEnabled === true);",
+                  "    pm.expect(withInsurance.length).to.be.greaterThan(0);",
+                  "    withInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer with insurance #' + (i+1)).to.equal(210000);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('totalAmount без страховки = 200000', function () {",
+                  "    const body = pm.response.json();",
+                  "    const noInsurance = body.filter(o => o.isInsuranceEnabled === false);",
+                  "    pm.expect(noInsurance.length).to.be.greaterThan(0);",
+                  "    noInsurance.forEach(function(offer, i) {",
+                  "        pm.expect(offer.totalAmount, 'offer no insurance #' + (i+1)).to.equal(200000);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 200000,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos14@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-15: Проверка расчёта ежемесячного платежа (monthlyPayment)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('monthlyPayment присутствует во всех 4 объектах', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer, 'offer #' + (i+1)).to.have.property('monthlyPayment');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('monthlyPayment > 0 во всех предложениях', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.monthlyPayment, 'offer #' + (i+1)).to.be.greaterThan(0);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('monthlyPayment соответствует формуле аннуитета', function () {",
+                  "    const body = pm.response.json();",
+                  "    const tolerance = 2.0;",
+                  "    body.forEach(function(offer, i) {",
+                  "        const r = offer.rate / 1200;",
+                  "        const n = offer.term;",
+                  "        const expected = offer.totalAmount * r / (1 - Math.pow(1 + r, -n));",
+                  "        pm.expect(Math.abs(offer.monthlyPayment - expected), 'offer #' + (i+1) + ' monthlyPayment')",
+                  "            .to.be.lessThan(tolerance);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 300000,\n  \"term\": 12,\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos15@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-16-18: Проверка сохранения данных в БД и статуса заявки",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('ело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  "",
+                  "const body = pm.response.json();",
+                  "if (body && body.length > 0) {",
+                  "    pm.environment.set('saved_applicationId', body[0].applicationId);",
+                  "    console.log('applicationId для проверки БД:', body[0].applicationId);",
+                  "}",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Client\",\n  \"lastName\": \"Test\",\n  \"middleName\": \"Testovich\",\n  \"email\": \"pos16@test.com\",\n  \"birthdate\": \"1995-05-15\",\n  \"passportSeries\": \"7777\",\n  \"passportNumber\": \"777777\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-19: Уникальность applicationId (запрос 1 из 2)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "",
+                  "const body = pm.response.json();",
+                  "if (body && body.length > 0) {",
+                  "    pm.environment.set('appId_first', body[0].applicationId);",
+                  "    console.log('applicationId запрос 1:', body[0].applicationId);",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Unique\",\n  \"lastName\": \"Test\",\n  \"middleName\": \"Testovich\",\n  \"email\": \"pos19a@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"1111\",\n  \"passportNumber\": \"111111\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-19: Уникальность applicationId (запрос 2 из 2)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('applicationId двух запросов отличаются', function () {",
+                  "    const body = pm.response.json();",
+                  "    const appIdFirst = pm.environment.get('appId_first');",
+                  "    const appIdSecond = body[0].applicationId;",
+                  "    console.log('applicationId запрос 2:', appIdSecond);",
+                  "    pm.expect(appIdSecond).to.not.equal(Number(appIdFirst));",
+                  "    pm.environment.unset('appId_first');",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Unique\",\n  \"lastName\": \"Test\",\n  \"middleName\": \"Testovich\",\n  \"email\": \"pos19a@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"1111\",\n  \"passportNumber\": \"111111\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-20: Полный цикл Application → Deal → Conveyor → Deal → Application",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа содержит 4 кредитных предложения', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Full\",\n  \"lastName\": \"Cycle\",\n  \"middleName\": \"Test\",\n  \"email\": \"pos20@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-21-22: Типы данных в ответе и соответствие requestedAmount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Типы данных полей в ответе корректны', function () {",
+                  "    const body = pm.response.json();",
+                  "    pm.expect(body).to.be.an('array').with.lengthOf(4);",
+                  "    body.forEach(function(offer, i) {",
+                  "        pm.expect(typeof offer.applicationId, 'applicationId offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(typeof offer.requestedAmount, 'requestedAmount offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(typeof offer.totalAmount, 'totalAmount offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(typeof offer.term, 'term offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(Number.isInteger(offer.term), 'term is integer offer #'+(i+1)).to.be.true;",
+                  "        pm.expect(typeof offer.monthlyPayment, 'monthlyPayment offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(typeof offer.rate, 'rate offer #'+(i+1)).to.equal('number');",
+                  "        pm.expect(typeof offer.isInsuranceEnabled, 'isInsuranceEnabled offer #'+(i+1)).to.equal('boolean');",
+                  "        pm.expect(typeof offer.isSalaryClient, 'isSalaryClient offer #'+(i+1)).to.equal('boolean');",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('requestedAmount в ответе = переданному amount (123456)', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.requestedAmount, 'offer #' + (i+1)).to.equal(123456);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 123456,\n  \"term\": {{term_default}},\n  \"firstName\": \"Type\",\n  \"lastName\": \"Check\",\n  \"middleName\": \"Typeovich\",\n  \"email\": \"pos21@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-POS-23: Максимальные допустимые значения всех полей одновременно",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Тело ответа — массив из 4 объектов', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  "",
+                  "pm.test('requestedAmount = 1000000', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.requestedAmount, 'offer #' + (i+1)).to.equal(1000000);",
+                  "    });",
+                  "});",
+                  "",
+                  "pm.test('term = 360', function () {",
+                  "    pm.response.json().forEach(function(offer, i) {",
+                  "        pm.expect(offer.term, 'offer #' + (i+1)).to.equal(360);",
+                  "    });",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1000000,\n  \"term\": 360,\n  \"firstName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"lastName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"middleName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"email\": \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx@verylongdomainna.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"9999\",\n  \"passportNumber\": \"999999\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NEG — Негативные сценарии",
+      "item": [
+        {
+          "name": "TC-NEG-01: amount меньше минимального (9999)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 9999,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg01@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-02: amount в виде строки из букв",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"abc\",\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg02@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-03: amount — смешанное значение (цифры и буквы)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"10000abc\",\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg03@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-04: term меньше минимального (5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": 5,\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg04@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-05: term в виде строки из букв",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": \"abc\",\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg05@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-06: term — смешанное значение (цифры и буквы)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": \"6months\",\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg06@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-07: ФИО минимальной длины (1 символ)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"I\",\n  \"lastName\": \"I\",\n  \"middleName\": \"I\",\n  \"email\": \"neg07@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-08: ФИО максимальной длины (31 символ)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"lastName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"middleName\": \"Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\n  \"email\": \"neg08@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-09: ФИО содержит цифры",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Ivan1\",\n  \"lastName\": \"Ivanov12\",\n  \"middleName\": \"Ivanovich123\",\n  \"email\": \"neg09@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-10: ФИО содержит кириллицу",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Иван\",\n  \"lastName\": \"Иванов\",\n  \"middleName\": \"Иванович\",\n  \"email\": \"neg10@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-11: email без символа @",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg11test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-12: email — локальная часть = 1 символ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"a@domain.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-13: email — домен = 1 символ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"user@u\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-14: email — локальная часть 51 символ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxy@domain.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-15: email — домен 21 символ",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"user@verylongdomainnameverylong.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-16: email содержит недопустимые символы",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"user!@domain.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-17: возраст 17 лет",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const today = new Date();",
+                  "const y = today.getFullYear() - 17;",
+                  "const m = String(today.getMonth() + 1).padStart(2,'0');",
+                  "const d = String(today.getDate()).padStart(2,'0');",
+                  "pm.environment.set('birthdate_17', y + '-' + m + '-' + d);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg17@test.com\",\n  \"birthdate\": \"{{birthdate_17}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-18: дата рождения в будущем",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg18@test.com\",\n  \"birthdate\": \"2100-01-01\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-19: дата рождения в неверном формате (DD.MM.YYYY)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg19@test.com\",\n  \"birthdate\": \"24.03.1990\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-20: несуществующая дата (30 февраля)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg20@test.com\",\n  \"birthdate\": \"2000-02-30\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-21: невалидный месяц (13)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg21@test.com\",\n  \"birthdate\": \"1990-13-01\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-22: серия паспорта из 3 цифр",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg22@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"123\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-23: серия паспорта из 5 цифр",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg23@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"12345\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-24: номер паспорта из 5 цифр",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg24@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"12345\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-25: номер паспорта из 7 цифр",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg25@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"1234567\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-26: серия паспорта содержит буквы",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg26@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"12A4\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-27: номер паспорта содержит буквы",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg27@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"12AB56\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-28: amount = 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 0,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg28@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-29: отсутствует поле amount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg29@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-30: отсутствует поле term",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg30@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-31: отсутствует поле firstName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg31@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-32: отсутствует поле lastName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg32@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-33: отсутствует поле middleName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"email\": \"neg33@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-34: отсутствует поле email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Sergey\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-35: отсутствует поле birthdate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg35@test.com\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-36: отсутствует поле passportSeries",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg36@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-37: отсутствует поле passportNumber",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg37@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-38: firstName = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg38@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-39: lastName = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg39@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-40: middleName = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"\",\n  \"email\": \"neg40@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-41: email = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Alexey\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-42: passportSeries = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg42@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-43: passportNumber = пустая строка",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg43@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-44: birthdate = null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"neg44@test.com\",\n  \"birthdate\": null,\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-NEG-45: email = null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Oleg\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": null,\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SEC — Безопасность",
+      "item": [
+        {
+          "name": "TC-SEC-01: SQL-инъекция в поле firstName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"Ivan'; DROP TABLE client; --\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec01@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-02: SQL-инъекция в поле lastName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"Ivanov'; DROP TABLE client; --\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec02@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-03: SQL-инъекция в поле middleName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"Ivanovich'; DROP TABLE client; --\",\n  \"email\": \"sec03@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-04: SQL-инъекция в поле email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"ivan''; DROP TABLE client; --@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-05: XSS-атака в поле firstName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"<script>alert('XSS')</script>\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec05@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-06: XSS-атака в поле lastName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"<script>alert('XSS')</script>\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec06@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-07: XSS-атака в поле middleName",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"<script>alert('XSS')</script>\",\n  \"email\": \"sec07@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-SEC-08: XSS-атака в поле email",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"<script>alert(''XSS'')</script>@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

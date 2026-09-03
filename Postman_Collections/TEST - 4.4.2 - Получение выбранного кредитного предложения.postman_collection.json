@@ -1,0 +1,3123 @@
+{
+  "info": {
+    "_postman_id": "12db588d-19e6-45dd-b75e-a20fc08bd795",
+    "name": "TEST - 4.4.2 | Получение выбранного кредитного предложения",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53864927",
+    "_collection_link": "https://go.postman.co/collection/53864927-12db588d-19e6-45dd-b75e-a20fc08bd795?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "POS — Позитивные сценарии",
+      "item": [
+        {
+          "name": "TC-4.4.2-POS-01: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа — массив из 4 предложений', function () {",
+                  "    pm.expect(pm.response.json()).to.be.an('array').with.lengthOf(4);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos01', body[0].applicationId);",
+                  "pm.environment.set('offer_pos01', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "packages": {},
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_01@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-01: Выбор предложения №1 (insurance=false, salary=false)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos01');",
+                  "if (offer) { pm.variables.set('body_pos01', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{offer_pos01}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-02: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos02', body[1].applicationId);",
+                  "pm.environment.set('offer_pos02', JSON.stringify(body[1]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_02@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-02: Выбор предложения №2 (insurance=false, salary=true)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos02');",
+                  "if (offer) { pm.variables.set('body_pos02', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"applicationId\": 2,\n    \"requestedAmount\": 100000,\n    \"totalAmount\": 100000,\n    \"term\": 24,\n    \"monthlyPayment\": 4801.28,\n    \"rate\": 14.00,\n    \"isInsuranceEnabled\": false,\n    \"isSalaryClient\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-03: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos03', body[2].applicationId);",
+                  "pm.environment.set('offer_pos03', JSON.stringify(body[2]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_03@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-03: Выбор предложения №3 (insurance=true, salary=false)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos03');",
+                  "if (offer) { pm.variables.set('body_pos03', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"applicationId\": 3,\n    \"requestedAmount\": 100000,\n    \"totalAmount\": 110000.00,\n    \"term\": 24,\n    \"monthlyPayment\": 5126.86,\n    \"rate\": 11.00,\n    \"isInsuranceEnabled\": true,\n    \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-04: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos04', body[3].applicationId);",
+                  "pm.environment.set('offer_pos04', JSON.stringify(body[3]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_04@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-04: Выбор предложения №4 (insurance=true, salary=true) — лучшее",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos04');",
+                  "if (offer) { pm.variables.set('body_pos04', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos04}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-05: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos05', body[0].applicationId);",
+                  "pm.environment.set('offer_pos05', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_05@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-05: Проверка маппинга T_03 — сохранение Credit",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos05');",
+                  "if (offer) { pm.variables.set('body_pos05', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos05}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-06: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK (создание заявки)', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos06', body[0].applicationId);",
+                  "pm.environment.set('offer_pos06', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_06@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-06: Проверка сохранения status_history",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos06');",
+                  "if (offer) { pm.variables.set('body_pos06', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos06}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-07: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_pos07', body[0].applicationId);",
+                  "pm.environment.set('offer_pos07', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_07@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-07: Проверка сохранения applied_offer",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos07');",
+                  "if (offer) { pm.variables.set('body_pos07', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos07}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-08: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos08', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_08@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-08: Проверка формирования письма",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos08');",
+                  "if (offer) { pm.variables.set('body_pos08', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos08}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-09: Шаг 0 — Создание заявки №1 (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos09a', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_09a@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-09: Шаг 0 — Создание заявки №2 (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos09b', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 150000,\n  \"term\": 36,\n  \"firstName\": \"Petr\",\n  \"lastName\": \"Petrov\",\n  \"middleName\": \"Petrovich\",\n  \"email\": \"pos2_09b@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"2345\",\n  \"passportNumber\": \"678901\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-09: Выбор предложения для заявки №1",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos09a');",
+                  "if (offer) { pm.variables.set('body_pos09a', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos09a}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-09: Выбор предложения для заявки №2",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos09b');",
+                  "if (offer) { pm.variables.set('body_pos09b', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos09b}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-10: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos10', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 123456,\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_10@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-10: Проверка сохранения дробных значений (BigDecimal)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos10');",
+                  "if (offer) { pm.variables.set('body_pos10', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos10}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-11: Шаг 0 — Создание заявки с мин. значениями (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos11', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 10000,\n  \"term\": 6,\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_11@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-11: Проверка граничных значений (amount=10000, term=6)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos11');",
+                  "if (offer) { pm.variables.set('body_pos11', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos11}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-12: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_pos12', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_12@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-POS-12: Проверка Kafka-взаимодействия Deal → Dossier",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_pos12');",
+                  "if (offer) { pm.variables.set('body_pos12', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test('Тело ответа пустое', function () {",
+                  "    pm.expect(pm.response.text()).to.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{{body_pos12}}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "NEG — Негативные сценарии",
+      "item": [
+        {
+          "name": "TC-4.4.2-NEG-01: Несуществующий applicationId (999999)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": 999999,\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-02: applicationId = null",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": null,\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-03: applicationId = 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": 0,\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-04: applicationId отрицательный (-1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": -1,\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-06: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg06', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg06@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-06: Шаг 1 — Первый успешный вызов apply",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_neg06');",
+                  "if (offer) { pm.variables.set('body_neg06', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"applicationId\": 5,\n        \"requestedAmount\": 100000,\n        \"totalAmount\": 100000,\n        \"term\": 24,\n        \"monthlyPayment\": 4848.58,\n        \"rate\": 15.00,\n        \"isInsuranceEnabled\": false,\n        \"isSalaryClient\": false\n    }"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-06: Шаг 2 — Повторный вызов для APPROVED заявки",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const offer = pm.environment.get('offer_neg06');",
+                  "if (offer) { pm.variables.set('body_neg06', offer); }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n        \"applicationId\": 5,\n        \"requestedAmount\": 100000,\n        \"totalAmount\": 110000.00,\n        \"term\": 24,\n        \"monthlyPayment\": 5126.86,\n        \"rate\": 11.00,\n        \"isInsuranceEnabled\": true,\n        \"isSalaryClient\": false\n    }"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-07: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg07', JSON.stringify(body[0]));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg07@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-07: Отсутствует поле applicationId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-08: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg08', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg08', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg08@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-08: Отсутствует поле totalAmount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg08}},\n  \"requestedAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-09: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg09', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg09', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg09@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-09: Отсутствует поле term",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg09}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-10: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg10', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg10', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg10@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-10: Отсутствует поле monthlyPayment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg10}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-11: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg11', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg11', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg11@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-11: Отсутствует поле rate",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg11}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-12: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg12', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg12', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg12@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-12: Отсутствует поле isInsuranceEnabled",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg12}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-13: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg13', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg13', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg13@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-13: Отсутствует поле isSalaryClient",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg13}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-14: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg14', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg14', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg14@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-14: totalAmount отрицательный (-50000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg14}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": -50000,\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-15: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg15', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg15', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg15@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-15: term отрицательный (-5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg15}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": -5,\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-16: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg16', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg16', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg16@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-16: monthlyPayment отрицательный (-100.00)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg16}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": -100.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-17: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg17', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg17', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg17@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-17: rate отрицательный (-5.0)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg17}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": -5.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-18: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg18', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg18', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg18@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-18: term меньше минимального (term=1)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg18}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": 1,\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-19: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg19', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg19', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg19@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-19: Несоответствие term сохранённому в заявке (term=36 вместо 12)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg19}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": 36,\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-20: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg20', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg20', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg20@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-20: totalAmount не соответствует расчётному (150000 вместо 50000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg20}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": 150000,\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": true,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-21: Шаг 0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('offer_neg21', JSON.stringify(body[0]));",
+                  "",
+                  "pm.environment.set('appId_neg21', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"pos2_neg21@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-NEG-21: Отсутствует поле requestedAmount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_neg21}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "SEC — Безопасность",
+      "item": [
+        {
+          "name": "TC-4.4.2-SEC-01: SQL-инъекция в поле applicationId",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": \"1 OR 1=1; DROP TABLE application; --\",\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-02: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_sec02', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec02@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-02: SQL-инъекция в поле totalAmount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_sec02}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": \"100000; DROP TABLE credit; --\",\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-03: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_sec03', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec03@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-03: XSS-атака через подмену данных",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_sec03}},\n  \"requestedAmount\": \"<script>alert('XSS')</script>\",\n  \"totalAmount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 4500.00,\n  \"rate\": 15.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-04: Шаг 0 — Создание заявки (предусловие)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 200 OK', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "const body = pm.response.json();",
+                  "pm.environment.set('appId_sec04', body[0].applicationId);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": {{amount_default}},\n  \"term\": {{term_default}},\n  \"firstName\": \"{{firstName_default}}\",\n  \"lastName\": \"{{lastName_default}}\",\n  \"middleName\": \"{{middleName_default}}\",\n  \"email\": \"sec05@test.com\",\n  \"birthdate\": \"{{birthdate_default}}\",\n  \"passportSeries\": \"{{passportSeries_default}}\",\n  \"passportNumber\": \"{{passportNumber_default}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "TC-4.4.2-SEC-04: Подмена данных кредитного предложения (rate=5.0, totalAmount=50000)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Статус ответа 500', function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"applicationId\": {{appId_sec04}},\n  \"requestedAmount\": {{amount_default}},\n  \"totalAmount\": 50000,\n  \"term\": {{term_default}},\n  \"monthlyPayment\": 2000.00,\n  \"rate\": 5.0,\n  \"isInsuranceEnabled\": false,\n  \"isSalaryClient\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}{{endpoint}}/apply",
+              "host": [
+                "{{base_url}}{{endpoint}}"
+              ],
+              "path": [
+                "apply"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
